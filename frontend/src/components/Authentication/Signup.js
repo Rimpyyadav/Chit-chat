@@ -1,11 +1,12 @@
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@chakra-ui/button";
 import { useToast } from "@chakra-ui/toast"
 import { useState } from 'react';
+//const {loading, setPicLoading} = useState(false)
 
 const Signup = () => {
     const [show, setShow] = useState(false);
@@ -13,8 +14,8 @@ const Signup = () => {
     const [email, setEmail] = useState("");
     const [confirmpassword, setConfirmpassword] = useState("");
     const [password, setPassword] = useState("");
-    const [pic, setPic] = useState("");
-    const [picLoading, setPicLoading] = useState(false);
+   const [pic, setPic] = useState("");
+    const [loading, setPicLoading] = useState(false);
 
     const handleClick = () => setShow(!show);
     const history = useHistory();
@@ -101,9 +102,9 @@ const Signup = () => {
         if (pics.type === "image/jpeg" || pics.type === "image/png") {
           const data = new FormData();
           data.append("file", pics);
-          data.append("upload_preset", "chat-app");
-          data.append("cloud_name", "piyushproj");
-          fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
+          data.append("upload_preset", "chat-APP");
+          data.append("cloud_name", "rimpy");
+          fetch("https://api.cloudinary.com/v1_1/rimpy/image/upload", {
             method: "post",
             body: data,
           })
@@ -195,6 +196,7 @@ const Signup = () => {
                 width="100%"
                 style={{ marginTop: 15 }}
                 onClick={submitHandler}
+                loading = {loading}
             >
                 Submit
             </Button>
