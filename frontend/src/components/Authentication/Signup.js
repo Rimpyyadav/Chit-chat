@@ -1,3 +1,4 @@
+
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
@@ -6,7 +7,6 @@ import axios from "axios";
 import { Button } from "@chakra-ui/button";
 import { useToast } from "@chakra-ui/toast"
 import { useState } from 'react';
-//const {loading, setPicLoading} = useState(false)
 
 const Signup = () => {
     const [show, setShow] = useState(false);
@@ -14,122 +14,122 @@ const Signup = () => {
     const [email, setEmail] = useState("");
     const [confirmpassword, setConfirmpassword] = useState("");
     const [password, setPassword] = useState("");
-   const [pic, setPic] = useState("");
-    const [loading, setPicLoading] = useState(false);
+    const [pic, setPic] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleClick = () => setShow(!show);
     const history = useHistory();
-
     const toast = useToast();
 
-    const submitHandler = async() =>
-     { setPicLoading(true);
+    const submitHandler = async () => {
+        setLoading(true);
         if (!name || !email || !password || !confirmpassword) {
-          toast({
-            title: "Please Fill all the Feilds",
-            status: "warning",
-            duration: 5000,
-            isClosable: true,
-            position: "bottom",
-          });
-          setPicLoading(false);
-          return;
+            toast({
+                title: "Please Fill all the Fields",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+            setLoading(false);
+            return;
         }
         if (password !== confirmpassword) {
-          toast({
-            title: "Passwords Do Not Match",
-            status: "warning",
-            duration: 5000,
-            isClosable: true,
-            position: "bottom",
-          });
-          return;
+            toast({
+                title: "Passwords Do Not Match",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+            setLoading(false);
+            return;
         }
         console.log(name, email, password, pic);
         try {
-          const config = {
-            headers: {
-              "Content-type": "application/json",
-            },
-          };
-          const { data } = await axios.post(
-            "/api/user",
-            {
-              name,
-              email,
-              password,
-              pic,
-            },
-            config
-          );
-          console.log(data);
-          toast({
-            title: "Registration Successful",
-            status: "success",
-            duration: 5000,
-            isClosable: true,
-            position: "bottom",
-          });
-          localStorage.setItem("userInfo", JSON.stringify(data));
-          setPicLoading(false);
-          history.push("/chats");
+            const config = {
+                headers: {
+                    "Content-type": "application/json",
+                },
+            };
+            const { data } = await axios.post(
+                "/api/user",
+                {
+                    name,
+                    email,
+                    password,
+                    pic,
+                },
+                config
+            );
+            console.log(data);
+            toast({
+                title: "Registration Successful",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+            localStorage.setItem("userInfo", JSON.stringify(data));
+            setLoading(false);
+            history.push("/chats");
         } catch (error) {
-          toast({
-            title: "Error Occured!",
-            description: error.response.data.message,
-            status: "error",
-            duration: 5000,
-            isClosable: true,
-            position: "bottom",
-          });
-          setPicLoading(false);
+            toast({
+                title: "Error Occurred!",
+                description: error.response.data.message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+            setLoading(false);
         }
-      };
-    
-      const postDetails = (pics) => {
-        setPicLoading(true);
-        if (pics === undefined) {
-          toast({
-            title: "Please Select an Image!",
-            status: "warning",
-            duration: 5000,
-            isClosable: true,
-            position: "bottom",
-          });
-          return;
+    };
+
+    const postDetails = (pics) => {
+        setLoading(true);
+        if (!pics) {
+            toast({
+                title: "Please Select an Image!",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+            setLoading(false);
+            return;
         }
         console.log(pics);
         if (pics.type === "image/jpeg" || pics.type === "image/png") {
-          const data = new FormData();
-          data.append("file", pics);
-          data.append("upload_preset", "chat-APP");
-          data.append("cloud_name", "rimpy");
-          fetch("https://api.cloudinary.com/v1_1/rimpy/image/upload", {
-            method: "post",
-            body: data,
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              setPic(data.url.toString());
-              console.log(data.url.toString());
-              setPicLoading(false);
+            const data = new FormData();
+            data.append("file", pics);
+            data.append("upload_preset", "chat-APP");
+            data.append("cloud_name", "rimpy");
+            fetch("https://api.cloudinary.com/v1_1/rimpy/image/upload", {
+                method: "post",
+                body: data,
             })
-            .catch((err) => {
-              console.log(err);
-              setPicLoading(false);
-            });
+                .then((res) => res.json())
+                .then((data) => {
+                    setPic(data.url.toString());
+                    console.log(data.url.toString());
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setLoading(false);
+                });
         } else {
-          toast({
-            title: "Please Select an Image!",
-            status: "warning",
-            duration: 5000,
-            isClosable: true,
-            position: "bottom",
-          });
-          setPicLoading(false);
-          return;
+            toast({
+                title: "Please Select a valid Image (jpeg/png)!",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+            setLoading(false);
         }
-      };
+    };
 
     return (
         <VStack spacing='5px'>
@@ -186,7 +186,7 @@ const Signup = () => {
                 <Input
                     type="file"
                     p={1.5}
-                    accept="image/"
+                    accept="image/jpeg, image/png"
                     onChange={(e) => postDetails(e.target.files[0])}
                 />
             </FormControl>
@@ -196,7 +196,7 @@ const Signup = () => {
                 width="100%"
                 style={{ marginTop: 15 }}
                 onClick={submitHandler}
-                loading = {loading}
+                isLoading={loading}
             >
                 Submit
             </Button>
