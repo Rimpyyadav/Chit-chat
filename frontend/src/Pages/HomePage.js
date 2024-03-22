@@ -5,6 +5,18 @@ import Signup from '../components/Authentication/Signup';
 
 
 const Homepage = () => {
+  const history = useHistory();
+
+  useEffect(() => {
+      const userInfo = json.parse(localStorage.getItem("userInfo"));
+      setUser(userInfo);
+
+      if(!userInfo){
+          history.pushState("/");
+      }
+      
+  }, [history]);
+
     return <Container maxW="x1" centerContent >
         <Box
         d="flex"
