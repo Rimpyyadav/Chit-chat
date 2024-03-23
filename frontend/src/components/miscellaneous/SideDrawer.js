@@ -13,6 +13,9 @@ return <>
     placeContent="bottom-end">
         <Button>
         <i class="fas fa-search" ></i>
+        <Text d={{base: "none", md: "flex"}} px="4" >
+            Search User
+        </Text>
 
         </Button>
     </Tooltip>
