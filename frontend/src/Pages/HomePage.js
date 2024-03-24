@@ -1,21 +1,21 @@
 import React from 'react';
 import { Container,Box,Heading,Tab,TabList,TabPanel,TabPanels,Tabs, } from "@chakra-ui/react";
 import Login from "../components/Authentication/Login";
+import { useHistory } from "react-router";
+import { useEffect } from "react";
 import Signup from '../components/Authentication/Signup';
 
 
-const Homepage = () => {
+
+function Homepage() {
   const history = useHistory();
 
   useEffect(() => {
-      const userInfo = json.parse(localStorage.getItem("userInfo"));
-      setUser(userInfo);
+    const user = JSON.parse(localStorage.getItem("userInfo"));
 
-      if(!userInfo){
-          history.pushState("/");
-      }
-      
+    if (user) history.push("/chats");
   }, [history]);
+
 
     return <Container maxW="x1" centerContent >
         <Box
