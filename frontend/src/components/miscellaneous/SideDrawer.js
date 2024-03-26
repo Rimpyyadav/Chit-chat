@@ -3,6 +3,7 @@ import { Box, Tooltip,Text, MenuButton, MenuItem } from '@chakra-ui/react';
 import {Button} from "@chakra-ui/button";
 import {Avatar} from "@chakra-ui/avatar"
 import { BellIcon, ChevronDownIcon} from "@chakra-ui/icons";
+import ProfileModal from './ProfileModal';
 
 
 
@@ -44,7 +45,10 @@ const SideDrawer = () => {
 
                         </MenuButton>
                         <MenuList>
-                            <MenuItem></MenuItem>
+                            <ProfileModal>
+                            <MenuItem>My Profile</MenuItem>
+                            </ProfileModal>
+                            
                         </MenuList>
                     </Menu>
                 </div>
