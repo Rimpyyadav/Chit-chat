@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Tooltip,Text, MenuButton, MenuItem } from '@chakra-ui/react';
+import { Box, Tooltip,Text, MenuButton, MenuItem, MenuDivider, DrawerOverlay, DrawerHeader } from '@chakra-ui/react';
 import {Button} from "@chakra-ui/button";
 import {Avatar} from "@chakra-ui/avatar"
 import { BellIcon, ChevronDownIcon} from "@chakra-ui/icons";
 import ProfileModal from './ProfileModal';
+import {useHistory} from "react-router-dom";
 
 
 
@@ -13,6 +14,13 @@ const SideDrawer = () => {
     const [loading, setLoading] = useState(false);
     const [loadingChat, setLoadingChat] = useState();
 
+    const {user} = ChatState();
+    const history = useHistory();;
+
+    const logoutHandler = () => {
+        localStorage.removeItem("userInfo");
+        history.pushState("/");
+    };
      
 
     return (
@@ -45,14 +53,21 @@ const SideDrawer = () => {
 
                         </MenuButton>
                         <MenuList>
-                            <ProfileModal>
+                            <ProfileModal user={user} >
                             <MenuItem>My Profile</MenuItem>
                             </ProfileModal>
+                            <MenuDivider/>
+                            <MenuItem onClick={logoutHandler}>Logout</MenuItem>
                             
                         </MenuList>
                     </Menu>
                 </div>
             </Box>
+           <Drawer placement='left' onClose={onClose} isOpen={isOpen} >
+            <DrawerOverlay>
+                <DrawerHeader borderBottomWidth="1px" >Search Users </DrawerHeader>
+            </DrawerOverlay>
+            </Drawer> 
         </>
     );
 };
