@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Tooltip,Text, MenuButton, MenuItem, MenuDivider, DrawerOverlay, DrawerHeader } from '@chakra-ui/react';
+import { Box, Tooltip,Text, MenuButton,Menu, MenuItem, MenuDivider, DrawerOverlay, DrawerHeader, DrawerBody,Input,useToast } from '@chakra-ui/react';
 import {Button} from "@chakra-ui/button";
 import {Avatar} from "@chakra-ui/avatar"
 import { BellIcon, ChevronDownIcon} from "@chakra-ui/icons";
@@ -21,8 +21,52 @@ const SideDrawer = () => {
         localStorage.removeItem("userInfo");
         history.pushState("/");
     };
-     
 
+    const toast = useToast()
+
+    const handleSearch = async() => {
+
+        if(!search) {
+            toast({
+                title: "Please Enter somthing in search",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+                position : "top-left",
+            });
+            return;
+        }
+   
+
+    try {
+        setLoading(true);
+        const config = {
+            headers:{
+            Authorization: `Bearer ${user.token}`,
+        }
+    };
+
+
+    const {data} = await axios.get(`/api/user?search=${search}`,config);
+
+    setLoading(false);
+    setLoading(data);
+
+   }   catch(error){
+    toast({
+        title: "Error Occured!",
+        description: "Failed to load the Search Results",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+
+    });
+    }
+    
+};
+     
+ 
     return (
         <>
             <Box>
@@ -67,6 +111,22 @@ const SideDrawer = () => {
             <DrawerOverlay>
                 <DrawerHeader borderBottomWidth="1px" >Search Users </DrawerHeader>
             </DrawerOverlay>
+            <DrawerHeader borderBottomWidth="1px" >
+                Search User </DrawerHeader>
+                <DrawerBody>
+                    <Box d="flex" pb={2} >
+                        <Input
+                        placeholder="Search by name or email"
+                        mr={2}
+                        value={search}
+                        onChange={(e) => search(e.target.value)}
+                        
+                        />
+                        <Button 
+                        onClick={handleSearch}
+                         >Go</Button>
+                    </Box>
+                </DrawerBody>
             </Drawer> 
         </>
     );
