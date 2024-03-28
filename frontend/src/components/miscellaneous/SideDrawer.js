@@ -65,6 +65,10 @@ const SideDrawer = () => {
     }
     
 };
+
+const accessChat = (userId) => {
+
+}
      
  
     return (
@@ -126,6 +130,20 @@ const SideDrawer = () => {
                         onClick={handleSearch}
                          >Go</Button>
                     </Box>
+
+                    {loading ?( <ChatLoading/>
+                  ) :  (
+                        searchResult?.map ((user) => (
+                            <UserListItem
+                            key={user.id}
+                            user={user}
+                            handleFunction={()=> accessChat(user._id)}
+                            />
+
+                        ))
+                    
+                   
+                )}
                 </DrawerBody>
             </Drawer> 
         </>
