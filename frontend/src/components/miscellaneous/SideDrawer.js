@@ -14,7 +14,7 @@ const SideDrawer = () => {
     const [loading, setLoading] = useState(false);
     const [loadingChat, setLoadingChat] = useState();
 
-    const {user} = ChatState();
+    const {user, setSeletedChat, chats, setChats} = ChatState();
     const history = useHistory();;
 
     const logoutHandler = () => {
@@ -66,7 +66,33 @@ const SideDrawer = () => {
     
 };
 
-const accessChat = (userId) => {
+const accessChat = async (userId) => {
+    try{
+        setLoadingChat(true)
+
+        const config = {
+            headers:{
+                "Content-type": "application/json",
+                Authorization: `Bearer ${user.token}`,
+            },
+        };
+        const{ data } = await axios.post("/api/chat",{userId}, config);
+        setSeletedChat(data);
+        setLoadingChat(false);
+        onClose();
+
+    }catch(error){
+        toast({
+            title: "Error fetching the chat",
+            description: error.message,
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom-left",
+
+    })
+
+    }
 
 }
      
