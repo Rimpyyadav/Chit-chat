@@ -9,6 +9,7 @@ const MyChats = () => {
     const toast = useToast({
         title: "Error Occured",
         description: "Failed to Load the chats",
+        
     });
 
     return <div>My Chats</div>
