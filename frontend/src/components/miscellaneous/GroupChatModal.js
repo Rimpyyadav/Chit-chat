@@ -52,6 +52,10 @@ const GroupChatModal = ({children}) => {
     const handleSumbit = () => {
 
     }
+    const handleDelete = (delUser) => {
+        setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
+
+    };
     const handleGroup = (userToAdd) => {
         if (selectedUsers.includes(userToAdd)) {
             toast({
@@ -61,7 +65,7 @@ const GroupChatModal = ({children}) => {
                 isClosable: true,
                 position: "top",
             });
-            return;
+            return;  
         }
         setSelectedUsers([...selectedUsers, userToAdd]);
     }
@@ -95,6 +99,13 @@ const GroupChatModal = ({children}) => {
                 <FormControl>
                     <Input placeholder='Add Users eg: John, Ami' mb={1} onChange={(e) => handleSearch(e.target.value)}> </Input>
                 </FormControl>
+
+               <Box w="100%" d="flex" flexWrap="wrap" >
+                {selectedUsers.map((u) => (
+                    <UserBadgeItem key={user._id} user={u}
+                    handleFunction={() => handleDelete(u) } />
+                ))}
+                </Box>
                 { loading? (
                 <div>loading</div>
             ) : (
