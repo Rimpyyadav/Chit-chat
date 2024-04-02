@@ -49,7 +49,52 @@ const GroupChatModal = ({children}) => {
         }
 
     }
-    const handleSumbit = () => {
+    const handleSumbit = async() => {
+        if(!groupChatName || !selectedUsers) {
+            toast({
+                tilte: "Please fill all the fields",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+                position: "top",
+            });
+            return;
+        }
+
+        try {
+            const config = {
+                headers: {
+                    Authorizaton: `Bearer $(user.token)`,
+                }
+
+            };
+
+            const {data} = await axios.post('/api/chat/group', {
+                name: groupChatName,
+                users: JSON.stringify(selectedUsers.map((u) => u._id)),
+            }, config 
+            );
+            setChats([data, ...chats]);
+            onClose();
+            toast({
+                title: "New Group Chat Created!",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            })
+
+        } catch (error) {
+            toast({
+                title: "Failed to create the Chat!",
+                description: error.response.data,
+                status: "error",
+                duration: 5000,
+                isCClosable: true,
+                position: "bottom",
+            });
+
+        }
 
     }
     const handleDelete = (delUser) => {
