@@ -1,9 +1,10 @@
+import React, { useState } from 'react';
 import { Box } from "@chakra-ui/react"
+import ChatBox from "../components/ChatBox";
+import MyChats from "../components/MyChats";
 import { ChatState } from "../Context/ChatProvider";
 import SideDrawer from "../components/miscellaneous/SideDrawer";
-import MyChats from "../components/MyChats";
-import ChatBox from "../components/ChatBox";
-import { ChatState } from "../Context/ChatProvider";
+
 
 
 const ChatPage = () => {

@@ -3,7 +3,8 @@ import {ChatState} from "../Context/ChatProvider";
 import { IconButton } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import {Box, Text} from "@chakra-ui/layout";
-import {grtSender} from "../config/ChatLogics"
+import {getSender, getSenderFull} from "../config/ChatLogics";
+import ProfileModal from "./miscellaneous/ProfileModal";
 
 
 const SingleChat = ({fetchAgain, setFetchAgain}) => {
@@ -29,14 +30,33 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
                 />
                 {!selectedChat.isGroup ? (
                     <>
-                    {getSender}
+                    {getSender(user, selectedChat.users)}
+                    <ProfileModal user={getSenderFull(user, selectedChat.users)} />
                     </>
                 ) : (
                     <>
                 {selectedChat.chatName.toUpperCase()}
+                {
+
+                }
                     </>
                 )}
             </Text>
+            <Box
+            d="flex"
+            flexDir="column"
+            justifyContent="flex-end"
+            p={3}
+            bg="#E8E8E8"
+            w="100%"
+            h="100%"
+            borderRadius="lg"
+            overflowY="hidden"
+            
+            
+            >
+
+            </Box>
             
             </>
         ):(

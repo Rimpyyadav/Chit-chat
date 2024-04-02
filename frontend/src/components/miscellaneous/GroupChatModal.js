@@ -1,15 +1,18 @@
 import React from 'react'
 import {useDisclosure} from "@chakra-ui/hooks";
-import {Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,Button,Input } from "@chakra-ui/react";
+import {Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,Button,Input,useToast,Box } from "@chakra-ui/react";
 import {FormControl } from "@chakra-ui/form-control";
 import axios from "axios";
+import { ChatState } from "../../Context/ChatProvider";
+import { useState } from "react";
+import UserBadgeItem from "../UserAvatar/UserBadgeItem";
 import UserListItem from "../UserAvatar/UserListItem";
 
 
 
 const GroupChatModal = ({children}) => {
     const {isOpen, onOpen, onClose} = useDisclosure();
-    const [groupChatName, setGroupChatName] = useSate();
+    const [groupChatName, setGroupChatName] = useState();
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([]);

@@ -1,13 +1,14 @@
-import React from "react";
-import {AddIcon} from "@chakra-ui/icons"
-import {useToast} from "@chakra-ui/toast";
+import { AddIcon } from "@chakra-ui/icons";
+import { Box, Stack, Text } from "@chakra-ui/layout";
+import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
-import {useEffect, useState} from "react";
-//import {getSender} from "../config/ChatLogics";
-import GroupChatModal from "./miscellanous/GroupChatModal";
+import { useEffect, useState } from "react";
+import { getSender } from "../config/ChatLogics";
+import ChatLoading from "./ChatLoading";
+import GroupChatModal from "./miscellaneous/GroupChatModal";
 import { Button } from "@chakra-ui/react";
-import React, {useState} from "react";
 import { ChatState } from "../Context/ChatProvider";
+
 
 
 const MyChats = ({ fetchAgain }) => {
