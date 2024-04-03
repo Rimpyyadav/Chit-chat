@@ -1,10 +1,32 @@
 import React, { useState } from 'react';
-import { Box, Tooltip,Text, MenuButton,Menu, MenuItem, MenuDivider, DrawerOverlay, DrawerHeader, DrawerBody,Input,useToast } from '@chakra-ui/react';
+import { Box, Text } from "@chakra-ui/layout";
+import { Input } from "@chakra-ui/input"
+import {
+    Menu,
+    MenuButton,
+    MenuDivider,
+    MenuItem,
+    MenuList,
+  } from "@chakra-ui/menu";
+  import {
+    Drawer,
+    DrawerBody,
+    //DrawerContent,
+    DrawerHeader,
+    DrawerOverlay,
+  } from "@chakra-ui/modal";
+  import { Tooltip } from "@chakra-ui/tooltip"
 import {Button} from "@chakra-ui/button";
+import ChatLoading from "../ChatLoading";
+import { useDisclosure } from "@chakra-ui/hooks";
 import {Avatar} from "@chakra-ui/avatar"
 import { BellIcon, ChevronDownIcon} from "@chakra-ui/icons";
 import ProfileModal from './ProfileModal';
 import {useHistory} from "react-router-dom";
+import { ChatState } from "../../Context/ChatProvider";
+import axios from "axios";
+import UserListItem from "../UserAvatar/UserListItem";
+import { useToast } from "@chakra-ui/toast";
 
 
 
@@ -23,6 +45,7 @@ const SideDrawer = () => {
     };
 
     const toast = useToast()
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleSearch = async() => {
 
@@ -134,6 +157,7 @@ const accessChat = async (userId) => {
                             <MenuItem onClick={logoutHandler}>Logout</MenuItem>
                             
                         </MenuList>
+                        
                     </Menu>
                 </div>
             </Box>
