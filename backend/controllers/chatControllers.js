@@ -49,7 +49,7 @@ const fetchChats = asyncHandler(async(req,res) => {
             .populate("users", "-password")
             .populate("groupAdmin", "-password")
             .populate("latestMessage")
-                .sort({ upadteAt: -1})
+                .sort({ updateAt: -1})
             .then(async(results) => {
                 results = await User.populate(isChat, {
                     path: "latestMessage.sender",
@@ -58,7 +58,7 @@ const fetchChats = asyncHandler(async(req,res) => {
 
                 res.status(200).send(results);
             });
-
+           
 
 
     }catch(error){
@@ -122,8 +122,9 @@ const  renameGroup = asyncHandler(async(req,res)=> {
     }else{
         res.json(updatedChat);
     }
+ 
+}); 
 
-});
 const addToGroup = asyncHandler(async(req,res)=>{
     const {chatId, userId} = req.body;
 
