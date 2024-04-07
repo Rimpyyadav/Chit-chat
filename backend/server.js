@@ -4,7 +4,7 @@ const {chats} = require("./data/data.js");
 const connectDB = require("./config/db.js");
 const userRoutes = require('./routes/userRoutes.js');
 const chatRoutes = require("./routes/chatRoutes.js");
-const messageRoutes = require("./routes/messageRoutes.js");
+const messageRoutes = require("./routes/messageRoute.js");
 const {notFound,errorHandler} = require('./middleware/errorMiddleware.js');
 
 const app = express();
