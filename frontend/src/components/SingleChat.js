@@ -5,9 +5,10 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 import {Box, Text} from "@chakra-ui/layout";
 import {getSender, getSenderFull} from "../config/ChatLogics";
 import ProfileModal from "./miscellaneous/ProfileModal";
-import { Spinner, Formcontrol, Input } from "@chakra-ui/react";
-import { sendMessage } from "../../../backend/controllers/messageController";
-
+import { Spinner, Formcontrol, Input, useToast } from "@chakra-ui/react";
+//import { sendMessage } from "../../../backend/controllers/messageController";
+import axios from "axios";
+import "./style.css";
 
 const SingleChat = ({fetchAgain, setFetchAgain}) => {
     const [loading, setLoading] = useState(false);
@@ -31,7 +32,7 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
 
 
             console.log(messages);
-            setMessages(data);
+            setMessages(data); 
             setLoading(false);
 
 
@@ -122,10 +123,11 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
                 ) : (
                     <>
                 {selectedChat.chatName.toUpperCase()}
-                {
-
-                }
-                    </>
+                <UpdateGroupChatModal 
+                fetchAgain={fetchAgain}
+                setFetchAgain={setFetchAgain}
+                fetch Messages={fetchMessages} />
+                 </>
                 )}
             </Text>
             <Box
@@ -149,7 +151,9 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
                     margin="auto"
                     />
                 ):(
-                    <div> {} </div>
+                    <div className="messages" >
+                        <ScrollableChat messages={messages}/>
+                         </div>
                 )}
                 <Formcontrol onKeyDown={sendMessage} isRequired mt={3} >
                     <Input 

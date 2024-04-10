@@ -8,7 +8,7 @@ import axios from 'axios';
 
 
 
-const UpdateGroupChatModal = ({fetchAgain, setFetchAgain}) => {
+const UpdateGroupChatModal = ({fetchAgain, setFetchAgain, fetchMessages}) => {
     const {isOpen, onOpen, onClose} = useDisclosure() 
     const [groupChatName, setGroupChatName] = useState();
     const [search, SetSearch] = useState("")
@@ -16,7 +16,53 @@ const UpdateGroupChatModal = ({fetchAgain, setFetchAgain}) => {
     const [renameloading, setRenameloading] = useState(false);
     const toast = useToast();
     const {selectedChat, setSelectedChat, user} = ChatState();
-    const handleRemove =() => {}
+
+    const handleRemove = async() => {
+        if (selectedChat.groupAdmin._id !== user._id && user1._id !== user._id) {
+            toast({
+              title: "Only admins can remove someone!",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+              position: "bottom",
+            });
+            return;
+          }
+      
+          try {
+            setLoading(true);
+            const config = {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+              },
+            };
+            const { data } = await axios.put(
+              `/api/chat/groupremove`,
+              {
+                chatId: selectedChat._id,
+                userId: user1._id,
+              },
+              config
+            );
+      
+            user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
+            setFetchAgain(!fetchAgain);
+            fetchMessages();
+            setLoading(false);
+          } catch (error) {
+            toast({
+              title: "Error Occured!",
+              description: error.response.data.message,
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+              position: "bottom",
+            });
+            setLoading(false);
+          }
+          setGroupChatName("");
+        };
+        
     const handleRename = async() => {
         if(!groupChatName) return
         try{
@@ -48,7 +94,7 @@ const UpdateGroupChatModal = ({fetchAgain, setFetchAgain}) => {
 
                 }
                 setGroupChatName("");
-            }
+         };
       
      const handleSearch = async(query) => {
                 setSearch(query);
@@ -80,7 +126,8 @@ const UpdateGroupChatModal = ({fetchAgain, setFetchAgain}) => {
                     })
                 }
         
-            }
+         };
+
     return (
         <>
           <IconButton d={{base:"flex"}} icon={<ViewIcon/>} onClick={onOpen}>Open Modal</IconButton>
