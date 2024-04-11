@@ -1,11 +1,15 @@
 import React from "react";
+import { FormControl } from "@chakra-ui/form-control";
 import {ChatState} from "../Context/ChatProvider";
 import { IconButton } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import {Box, Text} from "@chakra-ui/layout";
+import { useEffect, useState } from "react";
+import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import {getSender, getSenderFull} from "../config/ChatLogics";
 import ProfileModal from "./miscellaneous/ProfileModal";
 import { Spinner, Formcontrol, Input, useToast } from "@chakra-ui/react";
+import ScrollableChat from "./ScrollableChat";
 //import { sendMessage } from "../../../backend/controllers/messageController";
 import axios from "axios";
 import "./style.css";
@@ -17,7 +21,7 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
 
     const toast = useToast()
 
-    const {user, selectedChat, setSelectedChat} = ChatState();
+    const { selectedChat, setSelectedChat, user} = ChatState();
     const fetchMessages = async() => {
         if(!selectedChat) return;
         try {
@@ -155,7 +159,7 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
                         <ScrollableChat messages={messages}/>
                          </div>
                 )}
-                <Formcontrol onKeyDown={sendMessage} isRequired mt={3} >
+                <FormControl onKeyDown={sendMessage} isRequired mt={3} >
                     <Input 
                     varient="filled"
                     bg="E0E0E0"
@@ -163,7 +167,7 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
                     onChange={typingHandler}
                     value={newMessage}
                     > </Input>
-                </Formcontrol>
+                </FormControl>
 
             </Box>
             
