@@ -28,7 +28,7 @@ function Homepage() {
         borderRadius="lg"
         borderWidth="1px"
         >
-            <Heading fontSize="4x1" fontFamily="Work sans" color="black" >Talk-A-Tive</Heading>
+            <Heading fontSize="4xl" fontFamily="Work sans" color="black" >Talk-A-Tive</Heading>
         </Box>
 
         <Box bg="white" w="100%" p={4} borderRadius="lg" borderWidth="1px" >

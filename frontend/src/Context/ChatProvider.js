@@ -19,7 +19,7 @@ const ChatProvider = ({children}) => {
 
 
         if (!userInfo) {
-            history.push("/");
+            history?.push("/");
         }
     }, [history]);
 
