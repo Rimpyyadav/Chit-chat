@@ -11,18 +11,17 @@ import { ChatState } from "../Context/ChatProvider";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
+
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
 
-  const toast = useToast({
-    title: "Error Occured",
-    description: "Failed to Load the chats",
-  });
+  const toast = useToast();
 
   const fetchChats = async () => {
+    // console.log(user._id);
     try {
       const config = {
         headers: {
-          Authorization: `Bearer $(user.token)`,
+          Authorization: `Bearer ${user.token}`,
         },
       };
 
@@ -30,8 +29,8 @@ const MyChats = ({ fetchAgain }) => {
       setChats(data);
     } catch (error) {
       toast({
-        title: "Error Occured!!!",
-        description: "Failed to load the chats",
+        title: "Error Occured!",
+        description: "Failed to Load the chats",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -43,6 +42,7 @@ const MyChats = ({ fetchAgain }) => {
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
+    // eslint-disable-next-line
   }, [fetchAgain]);
 
   return (
@@ -66,14 +66,14 @@ const MyChats = ({ fetchAgain }) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        My chats
+        My Chats
         <GroupChatModal>
           <Button
             d="flex"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
             rightIcon={<AddIcon />}
           >
-            New Group Chat{" "}
+            New Group Chat
           </Button>
         </GroupChatModal>
       </Box>
@@ -123,4 +123,5 @@ const MyChats = ({ fetchAgain }) => {
     </Box>
   );
 };
+
 export default MyChats;
